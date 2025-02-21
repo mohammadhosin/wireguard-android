@@ -23,12 +23,12 @@ workflows:
         script: |
           mkdir -p $ANDROID_HOME/cmdline-tools/
           cd $ANDROID_HOME/cmdline-tools/
-          curl -o sdk.zip https://dl.google.com/android/repository/commandlinetools-mac-8512546_latest.zip
-          unzip sdk.zip
-          rm sdk.zip
-          chmod +x cmdline-tools/bin/sdkmanager
-          yes | cmdline-tools/bin/sdkmanager --licenses
-          bash cmdline-tools/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;25.1.8937393" "cmake;3.22.1"
+         # curl -o sdk.zip https://dl.google.com/android/repository/commandlinetools-mac-8512546_latest.zip
+        #  unzip sdk.zip
+         # rm sdk.zip
+        #  chmod +x cmdline-tools/bin/sdkmanager
+        #  yes | cmdline-tools/bin/sdkmanager --licenses
+        #  bash cmdline-tools/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;25.1.8937393" "cmake;3.22.1"
     
       - name: Build Android APK & AAB
         script: |
