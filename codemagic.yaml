@@ -40,5 +40,5 @@ workflows:
       
 
     artifacts:
-      - ./app/build/outputs/apk/**/*.apk
-      - ./app/build/outputs/bundle/**/*.aab
+      - ui/build/outputs/apk/release/*.apk
+      - .ui/build/outputs/apk/release/*.aab
