@@ -25,9 +25,7 @@ workflows:
           chmod +x cmdline-tools/bin/sdkmanager
           yes | cmdline-tools/bin/sdkmanager --licenses
 
-          chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager
-          yes | bash $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          bash $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;25.2.9519653"
+          bash cmdline-tools/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;25.2.9519653"
 
       - name: Build Android APK & AAB
         script: |
