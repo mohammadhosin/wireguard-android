@@ -29,7 +29,7 @@ workflows:
 
       - name: Build Android APK & AAB
         script: |
-      brew install flock
+         brew install flock
           ./gradlew assembleRelease
           ./gradlew bundleRelease
 
