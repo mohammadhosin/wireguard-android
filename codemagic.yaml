@@ -34,8 +34,8 @@ workflows:
         script: |
           export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
           find app/build/outputs/ -type f
-          ./gradlew assembleRelease
-          ./gradlew bundleRelease
+         # ./gradlew assembleRelease
+        # ./gradlew bundleRelease
       
 
     artifacts:
