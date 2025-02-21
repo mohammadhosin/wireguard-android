@@ -33,7 +33,7 @@ workflows:
       - name: Build Android APK & AAB
         script: |
           export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-          find app/ -type f
+          find ./ -type f
          # ./gradlew assembleRelease
         # ./gradlew bundleRelease
       
