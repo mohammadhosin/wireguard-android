@@ -1,5 +1,6 @@
-- name: Debug Android SDK Paths
+scripts:
+      - name: Setup Android SDK
         script: |
-          echo "Checking Android SDK..."
-          ls -lah $ANDROID_HOME/cmdline-tools/latest/bin/
-          find $ANDROID_HOME -name sdkmanager
+          chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager
+          yes | bash $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+          bash $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;25.2.9519653"
