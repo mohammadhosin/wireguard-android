@@ -1,6 +1,41 @@
-scripts:
+workflows:
+  wireguard_build:  # نام Workflow
+    name: WireGuard Build
+    instance_type: mac_mini_m1  # برای بیلد iOS به macOS نیاز داریم
+    max_build_duration: 60
+    triggering:
+      events:
+        - push
+        - pull_request
+    environment:
+      groups:
+        - wireguard_keys  # گروه متغیرهای محیطی برای امضا
+      vars:
+        ANDROID_SDK_ROOT: $HOME/android-sdk
+        ANDROID_HOME: $HOME/android-sdk
+        PATH: $ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/34.0.0:$PATH
+    scripts:
       - name: Setup Android SDK
         script: |
           chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager
           yes | bash $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
           bash $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;25.2.9519653"
+
+      - name: Build Android APK & AAB
+        script: |
+          ./gradlew assembleRelease
+          ./gradlew bundleRelease
+
+      - name: Build iOS
+        script: |
+          xcodebuild -workspace WireGuard.xcworkspace \
+                     -scheme WireGuard \
+                     -configuration Release \
+                     -sdk iphoneos \
+                     -archivePath build/WireGuard.xcarchive \
+                     archive
+
+    artifacts:
+      - app/build/outputs/apk/release/*.apk
+      - app/build/outputs/bundle/release/*.aab
+      - build/WireGuard.xcarchive/**/*.ipa
