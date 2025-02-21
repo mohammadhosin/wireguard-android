@@ -1,40 +1,5 @@
-workflows:
-  wireguard_build:
-    name: WireGuard Build
-    instance_type: mac_mini_m1  # macOS برای بیلد iOS
-    max_build_duration: 60
-    triggering:
-      events:
-        - push
-        - pull_request
-    environment:
-      groups:
-        - wireguard_keys
-      vars:
-        ANDROID_SDK_ROOT: $HOME/android-sdk
-        ANDROID_HOME: $HOME/android-sdk
-        PATH: $ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/34.0.0:$PATH
-    scripts:
-      - name: Setup Android SDK
+- name: Debug Android SDK Paths
         script: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;25.2.9519653"
-
-      - name: Build Android APK & AAB
-        script: |
-          ./gradlew assembleRelease
-          ./gradlew bundleRelease
-
-      - name: Build iOS
-        script: |
-          xcodebuild -workspace WireGuard.xcworkspace \
-                     -scheme WireGuard \
-                     -configuration Release \
-                     -sdk iphoneos \
-                     -archivePath build/WireGuard.xcarchive \
-                     archive
-
-    artifacts:
-      - app/build/outputs/apk/release/*.apk
-      - app/build/outputs/bundle/release/*.aab
-      - build/WireGuard.xcarchive/**/*.ipa
+          echo "Checking Android SDK..."
+          ls -lah $ANDROID_HOME/cmdline-tools/latest/bin/
+          find $ANDROID_HOME -name sdkmanager
