@@ -17,6 +17,14 @@ workflows:
     scripts:
       - name: Setup Android SDK
         script: |
+          mkdir -p $ANDROID_HOME/cmdline-tools/latest/
+          cd $ANDROID_HOME/cmdline-tools/latest/
+          curl -o sdk.zip https://dl.google.com/android/repository/commandlinetools-mac-8512546_latest.zip
+          unzip sdk.zip
+          rm sdk.zip
+          chmod +x cmdline-tools/bin/sdkmanager
+          yes | cmdline-tools/bin/sdkmanager --licenses
+
           chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager
           yes | bash $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
           bash $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0" "ndk;25.2.9519653"
